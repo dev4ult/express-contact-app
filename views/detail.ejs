@@ -1,0 +1,75 @@
+<section id="detail" class="py-10 w-full">
+  <%# error message if input is invalid %> <% if (typeof errors != 'undefined') { errors.forEach(error => { %>
+  <div class="alert alert-warning shadow-lg w-fit mt-2 p-2 my-3">
+    <div class="flex justify-start items-start">
+      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-grow-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+      <div class="flex flex-col">
+        <span><%= error.msg %></span>
+      </div>
+    </div>
+  </div>
+  <% })} %>
+
+  <div class="stats bg-primary text-primary-content">
+    <div class="stat">
+      <div class="stat-title"><%= contact.nohp %></div>
+      <div class="stat-value"><%= contact.nama %></div>
+      <div class="stat-title"><%= contact.email %></div>
+      <div class="stat-actions flex gap-2">
+        <label for="update-contact" class="btn modal-button btn-sm btn-info">edit</label>
+        <label for="delete-contact" class="btn btn-warning modal-button btn-sm">delete</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- update modal -->
+  <input type="checkbox" id="update-contact" class="modal-toggle" />
+  <div class="modal modal-bottom sm:modal-middle">
+    <div class="modal-box">
+      <form id="update-contact-form" action="/contact/<%= contact['_id'] %>" class="mt-4" method="post">
+        <div class="flex flex-col gap-2">
+          <div class="form-control">
+            <label class="input-group input-group-sm">
+              <span>Nama</span>
+              <input type="text" placeholder="George G.W" value="<%= contact.nama %>" class="input input-bordered" name="nama" required />
+            </label>
+          </div>
+          <div class="form-control">
+            <label class="input-group input-group-sm">
+              <span>Nomor HP</span>
+              <input type="text" placeholder="08xxxxxxxxxx" value="<%= contact.nohp %>" class="input input-bordered" name="nohp" required />
+            </label>
+          </div>
+          <div class="form-control">
+            <label class="input-group input-group-sm">
+              <span>Email</span>
+              <input type="email" placeholder="info@site.com" value="<%= contact.email %>" class="input input-bordered" name="email" />
+            </label>
+          </div>
+        </div>
+        <div class="w-fit ml-auto mt-3">
+          <input type="submit" value="Save Change" class="uppercase btn btn-sm btn-success" />
+        </div>
+        <div class="modal-action absolute top-0 right-0 mt-0 pt-6 pr-6">
+          <label for="update-contact" class="btn btn-square btn-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+          </label>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- delete modal -->
+  <input type="checkbox" id="delete-contact" class="modal-toggle" />
+  <div class="modal">
+    <div class="modal-box w-fit">
+      <h3 class="font-bold text-lg">Confirm to delete</h3>
+      <div class="modal-action">
+        <a class="btn btn-warning btn-sm" href="/contact/delete/<%= contact['_id'] %>">yes</a>
+        <label for="delete-contact" class="btn btn-sm btn-outline btn-warning">Cancel</label>
+      </div>
+    </div>
+  </div>
+</section>
